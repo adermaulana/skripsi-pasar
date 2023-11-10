@@ -25,7 +25,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('backend.users.create');
+        return view('backend.users.create',[
+            'roles' => ['admin','user','pedagang']
+        ]);
     }
 
     /**
@@ -41,7 +43,7 @@ class UsersController extends Controller
             'name'=>'string|required|max:30',
             'email'=>'string|required|unique:users',
             'password'=>'string|required',
-            'role'=>'required|in:admin,user',
+            'role'=>'required|in:admin,user,pedagang',
             'status'=>'required|in:active,inactive',
             'photo'=>'nullable|string',
         ]);
