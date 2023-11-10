@@ -17,6 +17,8 @@ class Admin
     {
         if($request->user()->role=='admin'){
             return $next($request);
+        } else if($request->user()->role=='pedagang'){
+            return $next($request);
         }
         else{
             request()->session()->flash('error','You do not have any permission to access this page');
