@@ -54,9 +54,11 @@
 							<!-- Single Widget -->
 							<div class="contact">
 								<ul>
-									<li>@foreach($settings as $data) {{$data->address}} @endforeach</li>
-									<li>@foreach($settings as $data) {{$data->email}} @endforeach</li>
-									<li>@foreach($settings as $data) {{$data->phone}} @endforeach</li>
+								@foreach($settings as $data)
+									<li> {{$data->address}}</li>
+									<li> {{$data->phone}}</li>
+									<li> {{$data->email}}</li>
+								@endforeach
 								</ul>
 							</div>
 							<!-- End Single Widget -->
