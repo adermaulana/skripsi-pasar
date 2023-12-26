@@ -126,36 +126,36 @@
             return view('backend.layouts.file-manager');
         })->name('file-manager');
         // user route
-        Route::resource('users', 'UsersController');
+        Route::resource('users', UsersController::class);
         // Banner
-        Route::resource('banner', 'BannerController');
+        Route::resource('banner', BannerController::class);
         // Brand
-        Route::resource('brand', 'BrandController');
+        Route::resource('brand', BrandController::class);
         // Profile
         Route::get('/profile', [AdminController::class, 'profile'])->name('admin-profile');
         Route::post('/profile/{id}', [AdminController::class, 'profileUpdate'])->name('profile-update');
         // Category
-        Route::resource('/category', 'CategoryController');
+        Route::resource('/category', CategoryController::class);
         // Product
-        Route::resource('/product', 'ProductController');
+        Route::resource('/product', ProductController::class);
         // Ajax for sub category
         Route::post('/category/{id}/child', 'CategoryController@getChildByParent');
         // POST category
-        Route::resource('/post-category', 'PostCategoryController');
+        Route::resource('/post-category', PostCategoryController::class);
         // Post tag
-        Route::resource('/post-tag', 'PostTagController');
+        Route::resource('/post-tag', PostTagController::class);
         // Post
-        Route::resource('/post', 'PostController');
+        Route::resource('/post', PostController::class);
         // Message
-        Route::resource('/message', 'MessageController');
+        Route::resource('/message', MessageController::class);
         Route::get('/message/five', [MessageController::class, 'messageFive'])->name('messages.five');
 
         // Order
-        Route::resource('/order', 'OrderController');
+        Route::resource('/order', OrderController::class);
         // Shipping
-        Route::resource('/shipping', 'ShippingController');
+        Route::resource('/shipping', ShippingController::class);
         // Coupon
-        Route::resource('/coupon', 'CouponController');
+        Route::resource('/coupon', CouponController::class);
         // Settings
         Route::get('settings', [AdminController::class, 'settings'])->name('settings');
         Route::post('setting/update', [AdminController::class, 'settingsUpdate'])->name('settings.update');

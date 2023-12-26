@@ -1,5 +1,7 @@
 @extends('frontend.layouts.master')
 
+@section('title','E-Shop || Contact')
+
 @section('main-content')
 	<!-- Breadcrumbs -->
 	<div class="breadcrumbs">

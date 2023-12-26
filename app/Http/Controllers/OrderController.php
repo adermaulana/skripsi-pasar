@@ -239,6 +239,13 @@ class OrderController extends Controller
     }
 
     public function productTrackOrder(Request $request){
+
+        if (!auth()->check()) {
+            // User is not logged in, show a message and redirect to the login page
+            request()->session()->flash('error', 'Login terlebih dahulu');
+            return redirect('/');
+        }
+
         // return $request->all();
         $order=Order::where('user_id',auth()->user()->id)->where('order_number',$request->order_number)->first();
         if($order){
@@ -264,20 +271,27 @@ class OrderController extends Controller
             }
         }
         else{
-            request()->session()->flash('error','Invalid order numer please try again');
+            request()->session()->flash('error','Invalid order number please try again');
             return back();
         }
     }
 
     // PDF generate
     public function pdf(Request $request){
-        $order=Order::getAllOrder($request->id);
-        // return $order;
-        $file_name=$order->order_number.'-'.$order->first_name.'.pdf';
-        // return $file_name;
-        $pdf=PDF::loadview('backend.order.pdf',compact('order'));
+        // Assuming getAllOrder returns a collection, you may need to modify this part
+        $order = Order::getAllOrder($request->id)->first(); // Assuming you want the first order
+    
+        if (!$order) {
+            return response()->json(['error' => 'Order not found.'], 404);
+        }
+    
+        $file_name = $order->order_number . '-' . $order->first_name . '.pdf';
+    
+        $pdf = PDF::loadView('backend.order.pdf', compact('order'));
+    
         return $pdf->download($file_name);
     }
+    
     // Income chart
     public function incomeChart(Request $request){
         $year=\Carbon\Carbon::now()->year;
