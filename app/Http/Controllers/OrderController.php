@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Shipping;
+use App\Models\Terlaris;
 use App\User;
 use PDF;
 use Notification;
@@ -22,6 +23,7 @@ class OrderController extends Controller
      */
     public function index()
     {
+        
         $orders=Order::orderBy('id','DESC')->paginate(10);
         return view('backend.order.index')->with('orders',$orders);
     }
@@ -46,9 +48,7 @@ class OrderController extends Controller
     {
         $this->validate($request,[
             'first_name'=>'string|required',
-            'last_name'=>'string|required',
             'address1'=>'string|required',
-            'address2'=>'string|nullable',
             'coupon'=>'nullable|numeric',
             'phone'=>'numeric|required',
             'post_code'=>'string|nullable',
@@ -90,8 +90,9 @@ class OrderController extends Controller
 
         $order=new Order();
         $order_data=$request->all();
-        $order_data['order_number']='ORD-'.strtoupper(Str::random(10));
+        $order_data['order_number']='ORDER-'.strtoupper(Str::random(10));
         $order_data['user_id']=$request->user()->id;
+
         $order_data['shipping_id']=$request->shipping;
         $shipping=Shipping::where('id',$order_data['shipping_id'])->pluck('price');
         // return session('coupon')['value'];
@@ -117,7 +118,7 @@ class OrderController extends Controller
             }
         }
         // return $order_data['total_amount'];
-        $order_data['status']="new";
+        $order_data['status']="Menunggu";
         if(request('payment_method')=='paypal'){
             $order_data['payment_method']='paypal';
             $order_data['payment_status']='paid';
@@ -126,8 +127,32 @@ class OrderController extends Controller
             $order_data['payment_method']='cod';
             $order_data['payment_status']='Unpaid';
         }
+
+        //Midtrans
+
+        // Set your Merchant Server Key
+        \Midtrans\Config::$serverKey = config('midtrans.serverKey');
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => $order_data['order_number'],
+                'gross_amount' => $order_data['total_amount'],
+            )
+        );
+        
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+
         $order->fill($order_data);
+        $order->snap_token = $snapToken;
         $status=$order->save();
+
         if($order)
         // dd($order->id);
         $users=User::where('role','admin')->first();
@@ -145,6 +170,7 @@ class OrderController extends Controller
             session()->forget('coupon');
         }
         Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
+
 
         // dd($users);        
         request()->session()->flash('success','Your product successfully placed in order');
@@ -187,16 +213,31 @@ class OrderController extends Controller
     {
         $order=Order::find($id);
         $this->validate($request,[
-            'status'=>'required|in:new,process,delivered,cancel'
+            'status'=>'required|in:Menunggu,Dalam Pengemasan,Dikirim,Selesai,Dibatalkan'
         ]);
         $data=$request->all();
         // return $request->status;
-        if($request->status=='delivered'){
+        if($request->status=='Selesai'){
+
             foreach($order->cart as $cart){
                 $product=$cart->product;
                 // return $product;
                 $product->stock -=$cart->quantity;
                 $product->save();
+
+                        // Memperbarui atau menambahkan data ke tabel Terlaris
+                        $terlaris = Terlaris::where('user_id', $product->user_id)->first();
+                        if ($terlaris) {
+                            $terlaris->increment('quantity', $cart->quantity);
+                        } else {
+                            // Jika belum ada dalam tabel Terlaris, buat entri baru
+                           $dataterlaris = Terlaris::create([
+                                'user_id' => $product->user->id,
+                                'quantity' => $cart->quantity,
+                            ]);
+                            
+
+                        }
             }
         }
         $status=$order->fill($data)->save();

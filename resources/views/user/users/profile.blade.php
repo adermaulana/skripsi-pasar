@@ -58,7 +58,7 @@
                       <label for="inputPhoto" class="col-form-label">Photo</label>
                       <div class="input-group">
                           <span class="input-group-btn">
-                              <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                              <a  id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
                               <i class="fa fa-picture-o"></i> Choose
                               </a>
                           </span>
@@ -68,6 +68,7 @@
                         <span class="text-danger">{{$message}}</span>
                         @enderror
                       </div>
+                      @can('admin')
                       <div class="form-group">
                           <label for="role" class="col-form-label">Role</label>
                           <select name="role" class="form-control">
@@ -79,7 +80,7 @@
                         <span class="text-danger">{{$message}}</span>
                         @enderror
                         </div>
-
+                    @endcan
                         <button type="submit" class="btn btn-success btn-sm">Update</button>
                 </form>
             </div>

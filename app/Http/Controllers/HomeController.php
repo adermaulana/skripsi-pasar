@@ -88,6 +88,32 @@ class HomeController extends Controller
         // return $order;
         return view('user.order.show')->with('order',$order);
     }
+
+    public function orderEdit($id)
+    {
+        $order=Order::find($id);
+        // return $order;
+        return view('user.order.edit')->with('order',$order);
+    }
+
+    public function orderUpdate(Request $request, $id)
+    {
+        $order=Order::find($id);
+        $this->validate($request,[
+            'status'=>'required|in:Menunggu,Dalam Pengemasan,Dikirim,Selesai,Dibatalkan'
+        ]);
+        $data=$request->all();
+
+        $status=$order->fill($data)->save();
+        if($status){
+            request()->session()->flash('success','Successfully updated order');
+        }
+        else{
+            request()->session()->flash('error','Error while updating order');
+        }
+        return redirect()->route('user.order.index');
+    }
+
     // Product Review
     public function productReviewIndex(){
         $reviews=ProductReview::getAllUserReview();

@@ -6,10 +6,12 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Wishlist;
 use App\Models\PostTag;
+use App\Models\Terlaris;
 use App\Models\PostCategory;
 use App\Models\Post;
 use App\Models\Cart;
 use App\Models\Brand;
+use App\Models\ProductReview;
 use App\User;
 use Auth;
 use Session;
@@ -18,6 +20,7 @@ use DB;
 use Hash;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+
 class FrontendController extends Controller
 {
    
@@ -26,23 +29,28 @@ class FrontendController extends Controller
     }
 
     public function home(){
+
+        $brands = Terlaris::orderBy('quantity', 'desc')
+                            ->limit(3)
+                            ->get();
+
+        $brandusers = User::latest('id')
+                        ->limit(3)
+                        ->get();
+
         $featured=Product::where('status','active')->where('is_featured',1)->orderBy('price','DESC')->limit(2)->get();
         $posts=Post::where('status','active')->orderBy('id','DESC')->limit(3)->get();
-        $brands =Brand::where('status','active')->limit(3)->orderBy('id','DESC')->get();
-        // return $banner;
+
+
         $products=Product::where('status','active')->orderBy('id','DESC')->limit(8)->get();
         $category=Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
-
-        //penempatan Collaborative Filtering
-
-
-
 
         // return $category;
         return view('frontend.index')
                 ->with('featured',$featured)
                 ->with('posts',$posts)
                 ->with('brands',$brands)
+                ->with('brandusers',$brandusers)
                 ->with('product_lists',$products)
                 ->with('category_lists',$category);
     }   
@@ -385,7 +393,7 @@ class FrontendController extends Controller
         $this->validate($request,[
             'name'=>'string|required|min:2',
             'email'=>'string|required|unique:users,email',
-            'password'=>'required|min:6|confirmed',
+            'password'=>'required|min:5|confirmed',
         ]);
         $data=$request->all();
         // dd($data);

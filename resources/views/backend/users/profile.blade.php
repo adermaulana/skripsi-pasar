@@ -68,6 +68,7 @@
                         <span class="text-danger">{{$message}}</span>
                         @enderror
                       </div>
+                      @can('admin')
                       <div class="form-group">
                           <label for="role" class="col-form-label">Role</label>
                           <select name="role" class="form-control">
@@ -79,7 +80,7 @@
                         <span class="text-danger">{{$message}}</span>
                         @enderror
                         </div>
-
+                        @endcan
                         <button type="submit" class="btn btn-success btn-sm">Update</button>
                 </form>
             </div>

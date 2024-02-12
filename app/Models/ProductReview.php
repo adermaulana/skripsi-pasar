@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductReview extends Model
 {
-    protected $fillable=['user_id','product_id','rate','review','status'];
+    protected $fillable=['user_id','product_id','rate_jenisproduk','rate_ketersediaanproduk','rate_pelayanan','rate_kebersihantoko','rate_kualitasproduk','rate_jumlahpenjualan','store_id','review','status'];
 
     public function user_info(){
         return $this->hasOne('App\User','id','user_id');

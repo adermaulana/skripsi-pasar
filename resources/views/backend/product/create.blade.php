@@ -7,6 +7,7 @@
     <div class="card-body">
       <form method="post" action="{{route('product.store')}}">
         {{csrf_field()}}
+        <input type="hidden" name="user_id">
         <div class="form-group">
           <label for="inputTitle" class="col-form-label">Title <span class="text-danger">*</span></label>
           <input id="inputTitle" type="text" name="title" placeholder="Enter title"  value="{{old('title')}}" class="form-control">
@@ -38,15 +39,26 @@
         </div>
               {{-- {{$categories}} --}}
 
+        @can('pedagang')
         <div class="form-group">
           <label for="cat_id">Category <span class="text-danger">*</span></label>
           <select name="cat_id" id="cat_id" class="form-control">
-              <option value="">--Select any category--</option>
+            <option value="">--Select any category--</option>
               @foreach($categories as $key=>$cat_data)
                   <option value='{{$cat_data->id}}'>{{$cat_data->title}}</option>
               @endforeach
-          </select>
-        </div>
+            </select>
+          </div>
+        @endcan
+        @can('nelayan')
+        <div class="form-group">
+          <label for="cat_id">Category <span class="text-danger">*</span></label>
+          <select name="cat_id" id="cat_id" class="form-control">
+            <option value="">--Select any category--</option>
+                  <option value='18'>Ikan</option>
+            </select>
+          </div>
+        @endcan
 
         <div class="form-group d-none" id="child_cat_div">
           <label for="child_cat_id">Sub Category</label>
@@ -59,7 +71,7 @@
         </div>
 
         <div class="form-group">
-          <label for="price" class="col-form-label">Price(NRS) <span class="text-danger">*</span></label>
+          <label for="price" class="col-form-label">Harga <span class="text-danger">*</span></label>
           <input id="price" type="number" name="price" placeholder="Enter price"  value="{{old('price')}}" class="form-control">
           @error('price')
           <span class="text-danger">{{$message}}</span>

@@ -124,16 +124,16 @@
                 <tr>
                     <td>{{$order->id}}</td>
                     <td>{{$order->order_number}}</td>
-                    <td>{{$order->first_name}} {{$order->last_name}}</td>
+                    <td>{{$order->first_name}}</td>
                     <td>{{$order->email}}</td>
                     <td>{{$order->quantity}}</td>
                     <td>${{number_format($order->total_amount,2)}}</td>
                     <td>
-                        @if($order->status=='new')
+                    @if($order->status=='Dikirim' || $order->status=='Menunggu' ||  $order->status=='Dalam Pengemasan')
                           <span class="badge badge-primary">{{$order->status}}</span>
-                        @elseif($order->status=='process')
+                        @elseif($order->status=='Menunggu')
                           <span class="badge badge-warning">{{$order->status}}</span>
-                        @elseif($order->status=='delivered')
+                        @elseif($order->status=='Selesai')
                           <span class="badge badge-success">{{$order->status}}</span>
                         @else
                           <span class="badge badge-danger">{{$order->status}}</span>

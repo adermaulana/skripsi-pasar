@@ -44,17 +44,6 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-      Posts
-    </div>
-    <!-- Comments -->
-    <li class="nav-item">
-      <a class="nav-link" href="{{route('user.post-comment.index')}}">
-          <i class="fas fa-comments fa-chart-area"></i>
-          <span>Comments</span>
-      </a>
-    </li>
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
       <button class="rounded-circle border-0" id="sidebarToggle"></button>

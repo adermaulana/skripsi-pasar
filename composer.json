@@ -13,9 +13,11 @@
         "laravel/socialite": "^5.6",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
+        "midtrans/midtrans-php": "^2.5",
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-newsletter": "^5.1",
         "srmklive/paypal": "^3.0",
+        "tigo/recommendation": "^0.0.2",
         "unisharp/laravel-filemanager": "^2.6"
     },
     "require-dev": {

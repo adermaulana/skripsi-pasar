@@ -49,7 +49,7 @@
                     <td>
                      <ul style="list-style:none" class="d-flex">
                           @for($i=1; $i<=5;$i++)
-                          @if($review->rate >=$i)
+                          @if($review->rate_jenisproduk >=$i)
                             <li style="float:left;color:#F7941D;"><i class="fa fa-star"></i></li>
                           @else
                             <li style="float:left;color:#F7941D;"><i class="far fa-star"></i></li>

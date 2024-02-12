@@ -25,6 +25,16 @@
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
+        <div class="form-group">
+          <label for="inputPhoto" class="col-form-label">Photo <span class="text-danger">*</span></label>
+          <div class="input-group">
+              <span class="input-group-btn">
+                  <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary text-white">
+                  <i class="fas fa-image"></i> Choose
+                  </a>
+              </span>
+          <input id="thumbnail" class="form-control" type="text" name="photo" value="{{old('photo')}}">
+        </div>
         <div class="form-group mb-3">
           <button type="reset" class="btn btn-warning">Reset</button>
            <button class="btn btn-success" type="submit">Submit</button>

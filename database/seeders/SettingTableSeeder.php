@@ -21,7 +21,7 @@ class SettingTableSeeder extends Seeder
             'short_des'=>"Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.",
             'photo'=>"image.jpg",
             'logo'=>'logo.jpg',
-            'address'=>"NO. 342 - London Oxford Street, 012 United Kingdom",
+            'address'=>"Bulukumba",
             'email'=>"epanrita@gmail.com",
             'phone'=>"+6285397425303",
         );

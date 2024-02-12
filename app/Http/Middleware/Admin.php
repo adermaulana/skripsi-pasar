@@ -19,6 +19,8 @@ class Admin
             return $next($request);
         } else if($request->user()->role=='pedagang'){
             return $next($request);
+        }else if($request->user()->role=='nelayan'){
+            return $next($request);
         }
         else{
             request()->session()->flash('error','Anda tidak memiliki izin untuk mengakses halaman ini!');

@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title','E-SHOP || Brand Page')
+@section('title','E-Panrita Mart || Halaman Brand')
 @section('main-content')
  <!-- DataTales Example -->
  <div class="card shadow mb-4">
@@ -22,6 +22,7 @@
               <th>Title</th>
               <th>Slug</th>
               <th>Status</th>
+              <th>Photo</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -31,6 +32,7 @@
               <th>Title</th>
               <th>Slug</th>
               <th>Status</th>
+              <th>Photo</th>
               <th>Action</th>
               </tr>
           </tfoot>
@@ -45,6 +47,17 @@
                             <span class="badge badge-success">{{$brand->status}}</span>
                         @else
                             <span class="badge badge-warning">{{$brand->status}}</span>
+                        @endif
+                    </td>
+                    <td>
+                        @if($brand->photo)
+                            @php
+                              $photo=explode(',',$brand->photo);
+                              // dd($photo);
+                            @endphp
+                            <img src="{{$photo[0]}}" class="img-fluid zoom" style="max-width:80px" alt="{{$brand->photo}}">
+                        @else
+                            <img src="{{asset('backend/img/thumbnail-default.jpg')}}" class="img-fluid" style="max-width:80px" alt="avatar.png">
                         @endif
                     </td>
                     <td>

@@ -9,7 +9,7 @@
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a href="{{('home')}}">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="">Cart</a></li>
+							<li class="active"><a href="">Keranjang</a></li>
 						</ul>
 					</div>
 				</div>
@@ -27,10 +27,10 @@
 					<table class="table shopping-summery">
 						<thead>
 							<tr class="main-hading">
-								<th>PRODUCT</th>
-								<th>NAME</th>
-								<th class="text-center">UNIT PRICE</th>
-								<th class="text-center">QUANTITY</th>
+								<th>PRODUK</th>
+								<th>NAMA</th>
+								<th class="text-center">HARGA SATUAN</th>
+								<th class="text-center">JUMLAH</th>
 								<th class="text-center">TOTAL</th>
 								<th class="text-center"><i class="ti-trash remove-icon"></i></th>
 							</tr>
@@ -49,7 +49,7 @@
 												<p class="product-name"><a href="{{route('product-detail',$cart->product['slug'])}}" target="_blank">{{$cart->product['title']}}</a></p>
 												<p class="product-des">{!!($cart['summary']) !!}</p>
 											</td>
-											<td class="price" data-title="Price"><span>${{number_format($cart['price'],2)}}</span></td>
+											<td class="price" data-title="Price"><span>Rp.{{number_format($cart['price'],2)}}</span></td>
 											<td class="qty" data-title="Qty"><!-- Input Order -->
 												<div class="input-group">
 													<div class="button minus">
@@ -67,7 +67,7 @@
 												</div>
 												<!--/ End Input Order -->
 											</td>
-											<td class="total-amount cart_single_price" data-title="Total"><span class="money">${{$cart['amount']}}</span></td>
+											<td class="total-amount cart_single_price" data-title="Total"><span class="money">Rp.{{$cart['amount']}}</span></td>
 
 											<td class="action" data-title="Remove"><a href="{{route('cart-delete',$cart->id)}}"><i class="ti-trash remove-icon"></i></a></td>
 										</tr>
@@ -104,13 +104,6 @@
 						<div class="row">
 							<div class="col-lg-8 col-md-5 col-12">
 								<div class="left">
-									<div class="coupon">
-									<form action="{{route('coupon-store')}}" method="POST">
-											@csrf
-											<input name="code" placeholder="Enter Your Coupon">
-											<button class="btn">Apply</button>
-										</form>
-									</div>
 									{{-- <div class="checkbox">`
 										@php
 											$shipping=DB::table('shippings')->where('status','active')->limit(1)->get();
@@ -122,7 +115,7 @@
 							<div class="col-lg-4 col-md-7 col-12">
 								<div class="right">
 									<ul>
-										<li class="order_subtotal" data-price="{{Helper::totalCartPrice()}}">Cart Subtotal<span>${{number_format(Helper::totalCartPrice(),2)}}</span></li>
+										<li class="order_subtotal" data-price="{{Helper::totalCartPrice()}}">Cart Subtotal<span>Rp.{{number_format(Helper::totalCartPrice(),2)}}</span></li>
 
 										@if(session()->has('coupon'))
 										<li class="coupon_price" data-price="{{Session::get('coupon')['value']}}">You Save<span>${{number_format(Session::get('coupon')['value'],2)}}</span></li>
@@ -134,14 +127,14 @@
 											}
 										@endphp
 										@if(session()->has('coupon'))
-											<li class="last" id="order_total_price">You Pay<span>${{number_format($total_amount,2)}}</span></li>
+											<li class="last" id="order_total_price">Bayar<span>Rp.{{number_format($total_amount,2)}}</span></li>
 										@else
-											<li class="last" id="order_total_price">You Pay<span>${{number_format($total_amount,2)}}</span></li>
+											<li class="last" id="order_total_price">Bayar<span>Rp.{{number_format($total_amount,2)}}</span></li>
 										@endif
 									</ul>
 									<div class="button5">
 										<a href="{{route('checkout')}}" class="btn">Checkout</a>
-										<a href="{{route('product-grids')}}" class="btn">Continue shopping</a>
+										<a href="{{route('product-grids')}}" class="btn">Lanjut Belanja</a>
 									</div>
 								</div>
 							</div>

@@ -38,6 +38,7 @@ class BrandController extends Controller
     {
         $this->validate($request,[
             'title'=>'string|required',
+            'photo'=>'string|required',
         ]);
         $data=$request->all();
         $slug=Str::slug($request->title);
@@ -96,6 +97,7 @@ class BrandController extends Controller
         $brand=Brand::find($id);
         $this->validate($request,[
             'title'=>'string|required',
+            'photo'=>'string|required',
         ]);
         $data=$request->all();
        

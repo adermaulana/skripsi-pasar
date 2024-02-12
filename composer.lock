@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c59a5c4b871023ab68aa9bc657b37c27",
+    "content-hash": "f09f648a82c5ca702a360e2c25f56ac4",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -2207,6 +2207,61 @@
                 "source": "https://github.com/Masterminds/html5-php/tree/2.7.6"
             },
             "time": "2022-08-18T16:18:26+00:00"
+        },
+        {
+            "name": "midtrans/midtrans-php",
+            "version": "2.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Midtrans/midtrans-php.git",
+                "reference": "a1ad0c824449ca8c68c4cf11b3417ad518311d2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Midtrans/midtrans-php/zipball/a1ad0c824449ca8c68c4cf11b3417ad518311d2b",
+                "reference": "a1ad0c824449ca8c68c4cf11b3417ad518311d2b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.7.*",
+                "psy/psysh": "0.4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Midtrans\\": "Midtrans/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andri Setiawan",
+                    "email": "andri.setiawan@veritrans.co.id"
+                },
+                {
+                    "name": "Alvin Litani",
+                    "email": "alvin.litani@veritrans.co.id"
+                },
+                {
+                    "name": "Ismail Faruqi",
+                    "email": "ismail.faruqi@veritrans.co.id"
+                }
+            ],
+            "description": "PHP Wrapper for Midtrans Payment API.",
+            "homepage": "https://midtrans.com",
+            "support": {
+                "issues": "https://github.com/Midtrans/midtrans-php/issues",
+                "source": "https://github.com/Midtrans/midtrans-php/tree/2.5.2"
+            },
+            "time": "2021-08-23T08:52:05+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6182,6 +6237,65 @@
                 }
             ],
             "time": "2023-02-24T10:42:00+00:00"
+        },
+        {
+            "name": "tigo/recommendation",
+            "version": "v0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tigoCaval/recommendation-algorithm.git",
+                "reference": "9f776194a9908dba4cdd345311c5fa2339c12c06"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tigoCaval/recommendation-algorithm/zipball/9f776194a9908dba4cdd345311c5fa2339c12c06",
+                "reference": "9f776194a9908dba4cdd345311c5fa2339c12c06",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tigo\\Recommendation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tiago A C Pereira",
+                    "email": "tiagocavalcante57@gmail.com"
+                }
+            ],
+            "description": "collaborative filtering recommender systems",
+            "keywords": [
+                "collaborative filtering",
+                "euclidean distance",
+                "recommendation",
+                "recommendation algorithm",
+                "recommendation system",
+                "recommender",
+                "recommender system",
+                "slope one"
+            ],
+            "support": {
+                "issues": "https://github.com/tigoCaval/recommendation-algorithm/issues",
+                "source": "https://github.com/tigoCaval/recommendation-algorithm/tree/v0.0.2"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/donate?hosted_button_id=S7FBV5N6ZTRXQ",
+                    "type": "custom"
+                }
+            ],
+            "time": "2021-02-23T02:18:16+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

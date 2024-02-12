@@ -32,6 +32,7 @@ class ProductController extends Controller
     {
         $brand=Brand::get();
         $category=Category::where('is_parent',1)->get();
+        
         // return $category;
         return view('backend.product.create')->with('categories',$category)->with('brands',$brand);
     }
@@ -62,7 +63,10 @@ class ProductController extends Controller
             'discount'=>'nullable|numeric'
         ]);
 
+        
+
         $data=$request->all();
+        $data['user_id'] = auth()->user()->id;
         $slug=Str::slug($request->title);
         $count=Product::where('slug',$slug)->count();
         if($count>0){
@@ -147,6 +151,7 @@ class ProductController extends Controller
         ]);
 
         $data=$request->all();
+        $data['user_id'] = auth()->user()->id;
         $data['is_featured']=$request->input('is_featured',0);
         $size=$request->input('size');
         if($size){

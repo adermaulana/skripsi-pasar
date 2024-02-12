@@ -5,7 +5,13 @@
       <div class="sidebar-brand-icon rotate-n-15">
         <i class="fas fa-laugh-wink"></i>
       </div>
+      @if(auth()->user()->role == 'admin')
       <div class="sidebar-brand-text mx-3">Admin</div>
+      @elseif(auth()->user()->role == 'pedagang')
+      <div class="sidebar-brand-text mx-3">Pedagang</div>
+      @elseif(auth()->user()->role == 'nelayan')
+      <div class="sidebar-brand-text mx-3">Nelayan</div>
+      @endif
     </a>
 
     <!-- Divider -->
@@ -19,22 +25,22 @@
     </li>
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
+    <!-- <hr class="sidebar-divider"> -->
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    <!-- <div class="sidebar-heading">
         Banner
-    </div>
+    </div> -->
 
     <!-- Nav Item - Pages Collapse Menu -->
     <!-- Nav Item - Charts -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="{{route('file-manager')}}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Media Manager</span></a>
-    </li>
+    </li> -->
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-image"></i>
         <span>Banners</span>
@@ -46,7 +52,7 @@
           <a class="collapse-item" href="{{route('banner.create')}}">Add Banners</a>
         </div>
       </div>
-    </li>
+    </li> -->
     <!-- Divider -->
     <hr class="sidebar-divider">
         <!-- Heading -->
@@ -55,24 +61,29 @@
         </div>
 
     <!-- Categories -->
+    @can('admin')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categoryCollapse" aria-expanded="true" aria-controls="categoryCollapse">
           <i class="fas fa-sitemap"></i>
-          <span>Category</span>
+          <span>Kategori</span>
         </a>
         <div id="categoryCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Category Options:</h6>
-            <a class="collapse-item" href="{{route('category.index')}}">Category</a>
-            <a class="collapse-item" href="{{route('category.create')}}">Add Category</a>
+            <a class="collapse-item" href="{{route('category.index')}}">Kategori</a>
+            <a class="collapse-item" href="{{route('category.create')}}">Tambah Kategori</a>
           </div>
         </div>
     </li>
+    @endcan
     {{-- Products --}}
+    
+
+    @can('pedagang')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#productCollapse" aria-expanded="true" aria-controls="productCollapse">
           <i class="fas fa-cubes"></i>
-          <span>Products</span>
+          <span>Produk</span>
         </a>
         <div id="productCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -82,63 +93,95 @@
           </div>
         </div>
     </li>
+  @endcan
+    @can('nelayan')
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#productCollapse" aria-expanded="true" aria-controls="productCollapse">
+          <i class="fas fa-cubes"></i>
+          <span>Produk</span>
+        </a>
+        <div id="productCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Product Options:</h6>
+            <a class="collapse-item" href="{{route('product.index')}}">Products</a>
+            <a class="collapse-item" href="{{route('product.create')}}">Add Product</a>
+          </div>
+        </div>
+    </li>
+  @endcan
 
     {{-- Brands --}}
+
+    @can('admin')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#brandCollapse" aria-expanded="true" aria-controls="brandCollapse">
           <i class="fas fa-table"></i>
-          <span>Brands</span>
+          <span>Toko</span>
         </a>
         <div id="brandCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Brand Options:</h6>
-            <a class="collapse-item" href="{{route('brand.index')}}">Brands</a>
-            <a class="collapse-item" href="{{route('brand.create')}}">Add Brand</a>
+            <a class="collapse-item" href="{{route('brand.index')}}">Toko</a>
+            <a class="collapse-item" href="{{route('brand.create')}}">Tambah Toko</a>
           </div>
         </div>
     </li>
+    @endcan
 
     {{-- Shipping --}}
+    @can('admin')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#shippingCollapse" aria-expanded="true" aria-controls="shippingCollapse">
           <i class="fas fa-truck"></i>
-          <span>Shipping</span>
+          <span>Pengiriman</span>
         </a>
         <div id="shippingCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Shipping Options:</h6>
-            <a class="collapse-item" href="{{route('shipping.index')}}">Shipping</a>
-            <a class="collapse-item" href="{{route('shipping.create')}}">Add Shipping</a>
+            <a class="collapse-item" href="{{route('shipping.index')}}">Pengiriman</a>
+            <a class="collapse-item" href="{{route('shipping.create')}}">Tambah Pengiriman</a>
           </div>
         </div>
     </li>
-
+    @endcan
     <!--Orders -->
+
+    @can('pedagang')
     <li class="nav-item">
         <a class="nav-link" href="{{route('order.index')}}">
             <i class="fas fa-hammer fa-chart-area"></i>
             <span>Orders</span>
         </a>
     </li>
+    @endcan
 
+    <!-- Order Nelayan -->
+    @can('nelayan')
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('order.index')}}">
+            <i class="fas fa-hammer fa-chart-area"></i>
+            <span>Orders</span>
+        </a>
+    </li>
+    @endcan
     <!-- Reviews -->
     <li class="nav-item">
         <a class="nav-link" href="{{route('review.index')}}">
             <i class="fas fa-comments"></i>
-            <span>Reviews</span></a>
+            <span>Review</span></a>
     </li>
     
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
+    <!-- <hr class="sidebar-divider"> -->
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    <!-- <div class="sidebar-heading">
       Posts
-    </div>
+    </div> -->
 
     <!-- Posts -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#postCollapse" aria-expanded="true" aria-controls="postCollapse">
         <i class="fas fa-fw fa-folder"></i>
         <span>Posts</span>
@@ -150,10 +193,10 @@
           <a class="collapse-item" href="{{route('post.create')}}">Add Post</a>
         </div>
       </div>
-    </li>
+    </li> -->
 
      <!-- Category -->
-     <li class="nav-item">
+     <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#postCategoryCollapse" aria-expanded="true" aria-controls="postCategoryCollapse">
           <i class="fas fa-sitemap fa-folder"></i>
           <span>Category</span>
@@ -165,10 +208,10 @@
             <a class="collapse-item" href="{{route('post-category.create')}}">Add Category</a>
           </div>
         </div>
-      </li>
+      </li> -->
 
       <!-- Tags -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="true" aria-controls="tagCollapse">
             <i class="fas fa-tags fa-folder"></i>
             <span>Tags</span>
@@ -180,41 +223,42 @@
             <a class="collapse-item" href="{{route('post-tag.create')}}">Add Tag</a>
             </div>
         </div>
-    </li>
+    </li> -->
 
       <!-- Comments -->
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="{{route('comment.index')}}">
             <i class="fas fa-comments fa-chart-area"></i>
             <span>Comments</span>
         </a>
-      </li>
+      </li> -->
 
 
     <!-- Divider -->
+    @can('admin')
     <hr class="sidebar-divider d-none d-md-block">
      <!-- Heading -->
     <div class="sidebar-heading">
         General Settings
     </div>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link" href="{{route('coupon.index')}}">
           <i class="fas fa-table"></i>
           <span>Coupon</span></a>
-    </li>
+    </li> -->
      <!-- Users -->
      <li class="nav-item">
         <a class="nav-link" href="{{route('users.index')}}">
             <i class="fas fa-users"></i>
-            <span>Users</span></a>
+            <span>Pengguna</span></a>
     </li>
      <!-- General settings -->
      <li class="nav-item">
         <a class="nav-link" href="{{route('settings')}}">
             <i class="fas fa-cog"></i>
-            <span>Settings</span></a>
+            <span>Pengaturan</span></a>
     </li>
-
+    @endcan
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
       <button class="rounded-circle border-0" id="sidebarToggle"></button>

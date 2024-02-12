@@ -75,10 +75,12 @@
             <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
             Change Password
           </a>
+          @can('admin')
           <a class="dropdown-item" href="{{route('settings')}}">
             <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
             Settings
           </a>
+          @endcan
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{{ route('logout') }}"
                 onclick="event.preventDefault();

@@ -14,7 +14,7 @@
 	<meta property="og:image" content="{{$product_detail->photo}}">
 	<meta property="og:description" content="{{$product_detail->description}}">
 @endsection
-@section('title','E-SHOP || PRODUCT DETAIL')
+@section('title','E-Panrita Mart || Detail Produk')
 @section('main-content')
 
 		<!-- Breadcrumbs -->
@@ -69,10 +69,18 @@
 												<div class="rating-main">
 													<ul class="rating">
 														@php
-															$rate=ceil($product_detail->getReview->avg('rate'))
+															$rate=DB::table('product_reviews')->where('product_id',$product_detail->id)->avg('rate_jenisproduk');
+                                                            $rate2=DB::table('product_reviews')->where('product_id',$product_detail->id)->avg('rate_ketersediaanproduk');
+                                                            $rate3=DB::table('product_reviews')->where('product_id',$product_detail->id)->avg('rate_pelayanan');
+                                                            $rate4=DB::table('product_reviews')->where('product_id',$product_detail->id)->avg('rate_kebersihantoko');
+                                                            $rate5=DB::table('product_reviews')->where('product_id',$product_detail->id)->avg('rate_kualitasproduk');
+                                                            $rate6=DB::table('product_reviews')->where('product_id',$product_detail->id)->avg('rate_jumlahpenjualan');
+
+                                                            $rataratadetail = ($rate + $rate2 + $rate3 + $rate4 + $rate5 + $rate6) / 6;
+
 														@endphp
 															@for($i=1; $i<=5; $i++)
-																@if($rate>=$i)
+																@if($rataratadetail>=$i)
 																	<li><i class="fa fa-star"></i></li>
 																@else 
 																	<li><i class="fa fa-star-o"></i></li>
@@ -84,7 +92,7 @@
                                                 @php 
                                                     $after_discount=($product_detail->price-(($product_detail->price*$product_detail->discount)/100));
                                                 @endphp
-												<p class="price"><span class="discount">${{number_format($after_discount,2)}}</span><s>${{number_format($product_detail->price,2)}}</s> </p>
+												<p class="price"><span class="discount">Rp{{number_format($after_discount,2)}}</span><s>Rp{{number_format($product_detail->price,2)}}</s> </p>
 												<p class="description">{!!($product_detail->summary)!!}</p>
 											</div>
 											<!--/ End Description -->
@@ -188,10 +196,10 @@
 																<!-- Review -->
 																<div class="comment-review">
 																	<div class="add-review">
-																		<h5>Add A Review</h5>
-																		<p>Your email address will not be published. Required fields are marked</p>
+																		<h5>Tambahkan Review ke Toko</h5>
+																		<p>Email Anda tidak akan ditampilkan</p>
 																	</div>
-																	<h4>Your Rating <span class="text-danger">*</span></h4>
+																	<h4>Rating Anda <span class="text-danger">*</span></h4>
 																	<div class="review-inner">
 																			<!-- Form -->
 																@auth
@@ -199,20 +207,131 @@
                                                                     @csrf
                                                                     <div class="row">
                                                                         <div class="col-lg-12 col-12">
+																			<div class="rating_box">
+																				<div class="star-rating">
+																					<div class="star-rating__wrap">
+																					  <label style="font-size:14px !important;">Jenis Produk</label>
+                                                                                      <input class="star-rating__input" id="star-rating-5" type="radio" name="rate_jenisproduk" value="5">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-5" title="5 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-rating-4" type="radio" name="rate_jenisproduk" value="4">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-4" title="4 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-rating-3" type="radio" name="rate_jenisproduk" value="3">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-3" title="3 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-rating-2" type="radio" name="rate_jenisproduk" value="2">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-2" title="2 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-rating-1" type="radio" name="rate_jenisproduk" value="1">
+																					  <label class="star-rating__ico fa fa-star-o" for="star-rating-1" title="1 out of 5 stars"></label>
+																					  @error('rate_jenisproduk')
+																						<span class="text-danger">{{$message}}</span>
+																					  @enderror
+                                                                                    </div>
+                                                                                  </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12 col-12">
                                                                             <div class="rating_box">
                                                                                   <div class="star-rating">
                                                                                     <div class="star-rating__wrap">
-                                                                                      <input class="star-rating__input" id="star-rating-5" type="radio" name="rate" value="5">
-                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-5" title="5 out of 5 stars"></label>
-                                                                                      <input class="star-rating__input" id="star-rating-4" type="radio" name="rate" value="4">
-                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-4" title="4 out of 5 stars"></label>
-                                                                                      <input class="star-rating__input" id="star-rating-3" type="radio" name="rate" value="3">
-                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-3" title="3 out of 5 stars"></label>
-                                                                                      <input class="star-rating__input" id="star-rating-2" type="radio" name="rate" value="2">
-                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-rating-2" title="2 out of 5 stars"></label>
-                                                                                      <input class="star-rating__input" id="star-rating-1" type="radio" name="rate" value="1">
-																					  <label class="star-rating__ico fa fa-star-o" for="star-rating-1" title="1 out of 5 stars"></label>
-																					  @error('rate')
+																					<label style="font-size:14px !important;">Ketersediaan Produk</label>
+                                                                                      <input class="star-rating__input" id="star-ketersediaan-5" type="radio" name="rate_ketersediaanproduk" value="5">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-ketersediaan-5" title="5 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-ketersediaan-4" type="radio" name="rate_ketersediaanproduk" value="4">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-ketersediaan-4" title="4 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-ketersediaan-3" type="radio" name="rate_ketersediaanproduk" value="3">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-ketersediaan-3" title="3 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-ketersediaan-2" type="radio" name="rate_ketersediaanproduk" value="2">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-ketersediaan-2" title="2 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-ketersediaan-1" type="radio" name="rate_ketersediaanproduk" value="1">
+																					  <label class="star-rating__ico fa fa-star-o" for="star-ketersediaan-1" title="1 out of 5 stars"></label>
+																					  @error('rate_ketersediaanproduk')
+																						<span class="text-danger">{{$message}}</span>
+																					  @enderror
+                                                                                    </div>
+                                                                                  </div>
+                                                                            </div>
+                                                                        </div>
+																		<div class="col-lg-12 col-12">
+                                                                            <div class="rating_box">
+                                                                                  <div class="star-rating">
+                                                                                    <div class="star-rating__wrap">
+																					<label style="font-size:14px !important;">Pelayananan</label>
+                                                                                      <input class="star-rating__input" id="star-pelayanan-5" type="radio" name="rate_pelayanan" value="5">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-pelayanan-5" title="5 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-pelayanan-4" type="radio" name="rate_pelayanan" value="4">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-pelayanan-4" title="4 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-pelayanan-3" type="radio" name="rate_pelayanan" value="3">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-pelayanan-3" title="3 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-pelayanan-2" type="radio" name="rate_pelayanan" value="2">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-pelayanan-2" title="2 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-pelayanan-1" type="radio" name="rate_pelayanan" value="1">
+																					  <label class="star-rating__ico fa fa-star-o" for="star-pelayanan-1" title="1 out of 5 stars"></label>
+																					  @error('rate_pelayanan')
+																						<span class="text-danger">{{$message}}</span>
+																					  @enderror
+                                                                                    </div>
+                                                                                  </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12 col-12">
+                                                                            <div class="rating_box">
+                                                                                  <div class="star-rating">
+                                                                                    <div class="star-rating__wrap">
+																					<label style="font-size:14px !important;">Kebersihan Toko</label>
+                                                                                      <input class="star-rating__input" id="star-kebersihan-5" type="radio" name="rate_kebersihantoko" value="5">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-kebersihan-5" title="5 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-kebersihan-4" type="radio" name="rate_kebersihantoko" value="4">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-kebersihan-4" title="4 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-kebersihan-3" type="radio" name="rate_kebersihantoko" value="3">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-kebersihan-3" title="3 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-kebersihan-2" type="radio" name="rate_kebersihantoko" value="2">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-kebersihan-2" title="2 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-kebersihan-1" type="radio" name="rate_kebersihantoko" value="1">
+																					  <label class="star-rating__ico fa fa-star-o" for="star-kebersihan-1" title="1 out of 5 stars"></label>
+																					  @error('rate_kebersihantoko')
+																						<span class="text-danger">{{$message}}</span>
+																					  @enderror
+                                                                                    </div>
+                                                                                  </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12 col-12">
+                                                                            <div class="rating_box">
+                                                                                  <div class="star-rating">
+                                                                                    <div class="star-rating__wrap">
+																					<label style="font-size:14px !important;">Kualitas Produk</label>
+                                                                                      <input class="star-rating__input" id="star-kualitas-5" type="radio" name="rate_kualitasproduk" value="5">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-kualitas-5" title="5 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-kualitas-4" type="radio" name="rate_kualitasproduk" value="4">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-kualitas-4" title="4 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-kualitas-3" type="radio" name="rate_kualitasproduk" value="3">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-kualitas-3" title="3 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-kualitas-2" type="radio" name="rate_kualitasproduk" value="2">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-kualitas-2" title="2 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-kualitas-1" type="radio" name="rate_kualitasproduk" value="1">
+																					  <label class="star-rating__ico fa fa-star-o" for="star-kualitas-1" title="1 out of 5 stars"></label>
+																					  @error('rate_kualitasproduk')
+																						<span class="text-danger">{{$message}}</span>
+																					  @enderror
+                                                                                    </div>
+                                                                                  </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12 col-12">
+                                                                            <div class="rating_box">
+                                                                                  <div class="star-rating">
+                                                                                    <div class="star-rating__wrap">
+																					<label style="font-size:14px !important;">Jumlah Penjualan</label>
+                                                                                      <input class="star-rating__input" id="star-penjualan-5" type="radio" name="rate_jumlahpenjualan" value="5">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-penjualan-5" title="5 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-penjualan-4" type="radio" name="rate_jumlahpenjualan" value="4">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-penjualan-4" title="4 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-penjualan-3" type="radio" name="rate_jumlahpenjualan" value="3">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-penjualan-3" title="3 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-penjualan-2" type="radio" name="rate_jumlahpenjualan" value="2">
+                                                                                      <label class="star-rating__ico fa fa-star-o" for="star-penjualan-2" title="2 out of 5 stars"></label>
+                                                                                      <input class="star-rating__input" id="star-penjualan-1" type="radio" name="rate_jumlahpenjualan" value="1">
+																					  <label class="star-rating__ico fa fa-star-o" for="star-penjualan-1" title="1 out of 5 stars"></label>
+																					  @error('rate_jumlahpenjualan')
 																						<span class="text-danger">{{$message}}</span>
 																					  @enderror
                                                                                     </div>
@@ -221,7 +340,7 @@
                                                                         </div>
 																		<div class="col-lg-12 col-12">
 																			<div class="form-group">
-																				<label>Write a review</label>
+																				<label>Tambahkan Komentar</label>
 																				<textarea name="review" rows="6" placeholder="" ></textarea>
 																			</div>
 																		</div>
@@ -244,13 +363,7 @@
 															
 																<div class="ratting-main">
 																	<div class="avg-ratting">
-																		{{-- @php 
-																			$rate=0;
-																			foreach($product_detail->rate as $key=>$rate){
-																				$rate +=$rate
-																			}
-																		@endphp --}}
-																		<h4>{{ceil($product_detail->getReview->avg('rate'))}} <span>(Overall)</span></h4>
+																		<h4>{{ intval($rataratadetail) }} <span>(Overall)</span></h4>
 																		<span>Based on {{$product_detail->getReview->count()}} Comments</span>
 																	</div>
 																	@foreach($product_detail['getReview'] as $data)
@@ -269,14 +382,14 @@
 
 																				<ul class="rating">
 																					@for($i=1; $i<=5; $i++)
-																						@if($data->rate>=$i)
+																						@if(intval(($data->rate_jenisproduk + $data->rate_ketersediaanproduk + $data->rate_pelayanan + $data->rate_kebersihantoko + $data->rate_kualitasproduk + $data->rate_jumlahpenjualan) / 6)>=$i)
 																							<li><i class="fa fa-star"></i></li>
 																						@else 
 																							<li><i class="fa fa-star-o"></i></li>
 																						@endif
 																					@endfor
 																				</ul>
-																				<div class="rate-count">(<span>{{$data->rate}}</span>)</div>
+																				<div class="rate-count">(<span>{{ intval(($data->rate_jenisproduk + $data->rate_ketersediaanproduk + $data->rate_pelayanan + $data->rate_kebersihantoko + $data->rate_kualitasproduk + $data->rate_jumlahpenjualan) / 6) }}</span>)</div>
 																			</div>
 																			<p>{{$data->review}}</p>
 																		</div>
@@ -347,8 +460,8 @@
                                             @php 
                                                 $after_discount=($data->price-(($data->discount*$data->price)/100));
                                             @endphp
-                                            <span class="old">${{number_format($data->price,2)}}</span>
-                                            <span>${{number_format($after_discount,2)}}</span>
+                                            <span class="old">Rp.{{number_format($data->price,2)}}</span>
+                                            <span>Rp.{{number_format($after_discount,2)}}</span>
                                         </div>
                                       
                                     </div>

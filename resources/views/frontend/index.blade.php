@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-@section('title','E-SHOP || HOME PAGE')
+@section('title','E-Panrita Mart')
 @section('main-content')
 <!-- Slider Area -->
 @if(count($brands)>0)
@@ -13,10 +13,37 @@
         <div class="carousel-inner" role="listbox">
                 @foreach($brands as $key=>$brand)
                 <div class="carousel-item {{(($key==0)? 'active' : '')}}">
-                    <img class="first-slide" src="{{$brand->title}}" alt="First slide">
+                    <img class="first-slide" src="{{$brand->user->photo}}" alt="First slide">
                     <div class="carousel-caption d-none d-md-block text-left">
-                        <h1 class="wow fadeInDown">{{$brand->title}}</h1>
-                        <p>{!! html_entity_decode($brand->status) !!}</p>
+                        <h1 class="wow fadeInDown">{{$brand->user->name}}</h1>
+                        <a class="btn btn-lg ws-btn wow fadeInUpBig" href="{{route('product-grids')}}" role="button">Shop Now<i class="far fa-arrow-alt-circle-right"></i></i></a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <a class="carousel-control-prev" href="#Gslider" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#Gslider" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+        </a>
+    </section>
+@else
+<section id="Gslider" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @foreach($brandusers as $key=>$brand)
+        <li data-target="#Gslider" data-slide-to="{{$key}}" class="{{(($key==0)? 'active' : '')}}"></li>
+            @endforeach
+
+        </ol>
+        <div class="carousel-inner" role="listbox">
+                @foreach($brandusers as $key=>$brand)
+                <div class="carousel-item {{(($key==0)? 'active' : '')}}">
+                    <img class="first-slide" src="{{$brand->photo}}" alt="First slide">
+                    <div class="carousel-caption d-none d-md-block text-left">
+                        <h1 class="wow fadeInDown">{{$brand->name}}</h1>
                         <a class="btn btn-lg ws-btn wow fadeInUpBig" href="{{route('product-grids')}}" role="button">Shop Now<i class="far fa-arrow-alt-circle-right"></i></i></a>
                     </div>
                 </div>
@@ -44,7 +71,7 @@
             @endphp
             @if($category_lists)
                 @foreach($category_lists as $cat)
-                    @if($cat->is_parent==1)
+                    @if($cat->is_parent==2)
                         <!-- Single Banner  -->
                         <div class="col-lg-4 col-md-6 col-12">
                             <div class="single-banner">
@@ -74,7 +101,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h2>Recommended Item For You</h2>
+                        <h2>Produk Yang Direkomendasikan Buat Kamu</h2>
                     </div>
                 </div>
             </div>
@@ -90,7 +117,7 @@
                                 @endphp
                                 @if($categories)
                                 <button class="btn" style="background:black"data-filter="*">
-                                    All Products
+                                    Semua Produk
                                 </button>
                                     @foreach($categories as $key=>$cat)
 
@@ -144,8 +171,8 @@
                                                 @php
                                                     $after_discount=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <span>${{number_format($after_discount,2)}}</span>
-                                                <del style="padding-left:4%;">${{number_format($product->price,2)}}</del>
+                                                <span>Rp.{{number_format($after_discount,2)}}</span>
+                                                <del style="padding-left:4%;">Rp.{{number_format($product->price,2)}}</del>
                                             </div>
                                         </div>
                                     </div>
@@ -164,94 +191,6 @@
         </div>
 </div>
 <!-- End Product Area -->
-{{-- @php
-    $featured=DB::table('products')->where('is_featured',1)->where('status','active')->orderBy('id','DESC')->limit(1)->get();
-@endphp --}}
-<!-- Start Midium Banner  -->
-<section class="midium-banner">
-    <div class="container">
-        <div class="row">
-            @if($featured)
-                @foreach($featured as $data)
-                    <!-- Single Banner  -->
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <div class="single-banner">
-                            @php
-                                $photo=explode(',',$data->photo);
-                            @endphp
-                            <img src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                            <div class="content">
-                                <p>{{$data->cat_info['title']}}</p>
-                                <h3>{{$data->title}} <br>Up to<span> {{$data->discount}}%</span></h3>
-                                <a href="{{route('product-detail',$data->slug)}}">Shop Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /End Single Banner  -->
-                @endforeach
-            @endif
-        </div>
-    </div>
-</section>
-<!-- End Midium Banner -->
-
-<!-- Start Most Popular -->
-<div class="product-area most-popular section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="section-title">
-                    <h2>Hot Item</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="owl-carousel popular-slider">
-                    @foreach($product_lists as $product)
-                        @if($product->condition=='hot')
-                            <!-- Start Single Product -->
-                        <div class="single-product">
-                            <div class="product-img">
-                                <a href="{{route('product-detail',$product->slug)}}">
-                                    @php
-                                        $photo=explode(',',$product->photo);
-                                    // dd($photo);
-                                    @endphp
-                                    <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                    <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                    {{-- <span class="out-of-stock">Hot</span> --}}
-                                </a>
-                                <div class="button-head">
-                                    <div class="product-action">
-                                        <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                        <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" ><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                    </div>
-                                    <div class="product-action-2">
-                                        <a href="{{route('add-to-cart',$product->slug)}}">Add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <h3><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
-                                <div class="product-price">
-                                    <span class="old">${{number_format($product->price,2)}}</span>
-                                    @php
-                                    $after_discount=($product->price-($product->price*$product->discount)/100)
-                                    @endphp
-                                    <span>${{number_format($after_discount,2)}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Single Product -->
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Most Popular Area -->
 
 <!-- Start Shop Home List  -->
 <section class="shop-home-list section">
@@ -261,7 +200,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="shop-section-title">
-                            <h1>Latest Items</h1>
+                            <h1>Produk Terbaru</h1>
                         </div>
                     </div>
                 </div>
@@ -287,7 +226,7 @@
                                 <div class="col-lg-6 col-md-6 col-12 no-padding">
                                     <div class="content">
                                         <h4 class="title"><a href="#">{{$product->title}}</a></h4>
-                                        <p class="price with-discount">${{number_format($product->discount,2)}}</p>
+                                        <p class="price with-discount">Rp.{{number_format($product->price,2)}}</p>
                                     </div>
                                 </div>
                                 </div>
@@ -303,38 +242,6 @@
 </section>
 <!-- End Shop Home List  -->
 
-<!-- Start Shop Blog  -->
-<section class="shop-blog section">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="section-title">
-                    <h2>From Our Blog</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            @if($posts)
-                @foreach($posts as $post)
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <!-- Start Single Blog  -->
-                        <div class="shop-single-blog">
-                            <img src="{{$post->photo}}" alt="{{$post->photo}}">
-                            <div class="content">
-                                <p class="date">{{$post->created_at->format('d M , Y. D')}}</p>
-                                <a href="{{route('blog.detail',$post->slug)}}" class="title">{{$post->title}}</a>
-                                <a href="{{route('blog.detail',$post->slug)}}" class="more-btn">Continue Reading</a>
-                            </div>
-                        </div>
-                        <!-- End Single Blog  -->
-                    </div>
-                @endforeach
-            @endif
-
-        </div>
-    </div>
-</section>
-<!-- End Shop Blog  -->
 
 <!-- Start Shop Services Area -->
 <section class="shop-services section home">
@@ -423,11 +330,18 @@
                                                     <i class="yellow fa fa-star"></i>
                                                     <i class="fa fa-star"></i> --}}
                                                     @php
-                                                        $rate=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate');
+                                                        $rate=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate_jenisproduk');
+                                                        $rate2=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate_ketersediaanproduk');
+                                                        $rate3=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate_pelayanan');
+                                                        $rate4=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate_kebersihantoko');
+                                                        $rate5=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate_kualitasproduk');
+                                                        $rate6=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate_jumlahpenjualan');
+
+														$ratarata = ($rate + $rate2 + $rate3 + $rate4 + $rate5 + $rate6) / 6;
                                                         $rate_count=DB::table('product_reviews')->where('product_id',$product->id)->count();
                                                     @endphp
                                                     @for($i=1; $i<=5; $i++)
-                                                        @if($rate>=$i)
+                                                        @if($ratarata>=$i)
                                                             <i class="yellow fa fa-star"></i>
                                                         @else
                                                         <i class="fa fa-star"></i>

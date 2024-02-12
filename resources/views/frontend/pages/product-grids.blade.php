@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title','E-SHOP || PRODUCT PAGE')
+@section('title','E-Panrita Mart || Halaman Produk')
 
 @section('main-content')
 	<!-- Breadcrumbs -->
@@ -62,7 +62,7 @@
                                 </div>
                                 <!--/ End Single Widget -->
                                 <!-- Shop By Price -->
-                                    <div class="single-widget range">
+                                    <!-- <div class="single-widget range">
                                         <h3 class="title">Shop by Price</h3>
                                         <div class="price-filter">
                                             <div class="price-filter-inner">
@@ -82,7 +82,7 @@
                                             </div>
                                         </div>
 
-                                    </div>
+                                    </div> -->
                                     <!--/ End Shop By Price -->
                                 <!-- Single Widget -->
                                 <div class="single-widget recent-post">
@@ -102,7 +102,7 @@
                                                 @php
                                                     $org=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <p class="price"><del class="text-muted">${{number_format($product->price,2)}}</del>   ${{number_format($org,2)}}  </p>
+                                                <p class="price"><del class="text-muted">Rp{{number_format($product->price,2)}}</del>   Rp{{number_format($org,2)}}  </p>
 
                                             </div>
                                         </div>
@@ -192,8 +192,8 @@
                                                 @php
                                                     $after_discount=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <span>${{number_format($after_discount,2)}}</span>
-                                                <del style="padding-left:4%;">${{number_format($product->price,2)}}</del>
+                                                <span>Rp{{number_format($after_discount,2)}}</span>
+                                                <del style="padding-left:4%;">Rp{{number_format($product->price,2)}}</del>
                                             </div>
                                         </div>
                                     </div>
@@ -261,11 +261,18 @@
                                                         <i class="yellow fa fa-star"></i>
                                                         <i class="fa fa-star"></i> --}}
                                                         @php
-                                                            $rate=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate');
+                                                            $rate=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate_jenisproduk');
+                                                            $rate2=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate_ketersediaanproduk');
+                                                            $rate3=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate_pelayanan');
+                                                            $rate4=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate_kebersihantoko');
+                                                            $rate5=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate_kualitasproduk');
+                                                            $rate6=DB::table('product_reviews')->where('product_id',$product->id)->avg('rate_jumlahpenjualan');
+
+                                                            $ratarata = ($rate + $rate2 + $rate3 + $rate4 + $rate5 + $rate6) / 6;
                                                             $rate_count=DB::table('product_reviews')->where('product_id',$product->id)->count();
                                                         @endphp
                                                         @for($i=1; $i<=5; $i++)
-                                                            @if($rate>=$i)
+                                                            @if($ratarata>=$i)
                                                                 <i class="yellow fa fa-star"></i>
                                                             @else
                                                             <i class="fa fa-star"></i>
@@ -285,7 +292,7 @@
                                             @php
                                                 $after_discount=($product->price-($product->price*$product->discount)/100);
                                             @endphp
-                                            <h3><small><del class="text-muted">${{number_format($product->price,2)}}</del></small>    ${{number_format($after_discount,2)}}  </h3>
+                                            <h3><small><del class="text-muted">Rp.{{number_format($product->price,2)}}</del></small>    Rp.{{number_format($after_discount,2)}}  </h3>
                                             <div class="quickview-peragraph">
                                                 <p>{!! html_entity_decode($product->summary) !!}</p>
                                             </div>

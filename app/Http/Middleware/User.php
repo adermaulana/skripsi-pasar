@@ -16,7 +16,7 @@ class User
     public function handle($request, Closure $next)
     {
         if(empty(session('user'))){
-            return redirect()->route('login.form');
+            return redirect()->route('login.form')->with('error','Anda Belum Login!');
         }
         else{
             return $next($request);

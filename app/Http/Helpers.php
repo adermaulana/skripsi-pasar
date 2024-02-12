@@ -28,7 +28,7 @@ class Helper{
             ?>
             
             <li>
-            <a href="javascript:void(0);">Category<i class="ti-angle-down"></i></a>
+            <a href="javascript:void(0);">Kategori<i class="ti-angle-down"></i></a>
                 <ul class="dropdown border-0 shadow">
                 <?php
                     foreach($menu as $cat_info){

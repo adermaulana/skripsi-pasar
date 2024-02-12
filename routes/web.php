@@ -179,6 +179,8 @@
         //  Order
         Route::get('/order', "HomeController@orderIndex")->name('user.order.index');
         Route::get('/order/show/{id}', "HomeController@orderShow")->name('user.order.show');
+        Route::get('/order/edit/{id}', "HomeController@orderEdit")->name('user.order.edit');
+        Route::patch('/order/edit/{id}', "HomeController@orderUpdate")->name('user.order.update');
         Route::delete('/order/delete/{id}', [HomeController::class, 'userOrderDelete'])->name('user.order.delete');
         // Product Review
         Route::get('/user-review', [HomeController::class, 'productReviewIndex'])->name('user.productreview.index');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Auth;
+use App\User;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Wishlist;
@@ -250,6 +251,11 @@ class CartController extends Controller
         //     $cart->fill($data);
         //     $cart->save();
         // }
-        return view('frontend.pages.checkout');
+        $userId = auth()->user()->id;
+        $user = User::where('id',$userId)->first();
+
+        return view('frontend.pages.checkout',[
+            'user' => $user
+        ]);
     }
 }

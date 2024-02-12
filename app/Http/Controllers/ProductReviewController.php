@@ -17,7 +17,16 @@ class ProductReviewController extends Controller
      */
     public function index()
     {
-        $reviews=ProductReview::getAllReview();
+        $auth = Auth()->user();
+        if($auth->role == 'pedagang'){
+            $reviews = ProductReview::where('user_id', $auth->id)->get();
+        }
+        elseif($auth->role == 'nelayan'){
+            $reviews = ProductReview::where('user_id', $auth->id)->get();
+        }
+        else {
+            $reviews=ProductReview::getAllReview();
+        }
         
         return view('backend.review.index')->with('reviews',$reviews);
     }
@@ -41,7 +50,12 @@ class ProductReviewController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'rate'=>'required|numeric|min:1'
+            'rate_jenisproduk'=>'numeric|min:1',
+            'rate_ketersediaanproduk'=>'numeric|min:1',
+            'rate_pelayanan'=>'numeric|min:1',
+            'rate_kebersihantoko'=>'numeric|min:1',
+            'rate_kualitasproduk'=>'numeric|min:1',
+            'rate_jumlahpenjualan'=>'numeric|min:1',
         ]);
         $product_info=Product::getProductBySlug($request->slug);
         //  return $product_info;
@@ -49,9 +63,26 @@ class ProductReviewController extends Controller
         $data=$request->all();
         $data['product_id']=$product_info->id;
         $data['user_id']=$request->user()->id;
+        $data['store_id']=$product_info->user_id;
         $data['status']='active';
+
         // dd($data);
-        $status=ProductReview::create($data);
+
+        $defaults = [
+            'rate_jenisproduk' => 0,
+            'rate_ketersediaanproduk' => 0,
+            'rate_pelayanan' => 0,
+            'rate_kebersihantoko' => 0,
+            'rate_kualitasproduk' => 0,
+            'rate_jumlahpenjualan' => 0,
+        ];
+
+        $data = array_merge($defaults, $data);
+        
+        $status=ProductReview::updateOrCreate(
+            ['user_id' => $data['user_id'], 'product_id' => $data['product_id']],
+            $data
+        );
 
         $user=User::where('role','admin')->get();
         $details=[
@@ -61,7 +92,7 @@ class ProductReviewController extends Controller
         ];
         Notification::send($user,new StatusNotification($details));
         if($status){
-            request()->session()->flash('success','Thank you for your feedback');
+            request()->session()->flash('success','Terima Kasih Telah memberikan Rating');
         }
         else{
             request()->session()->flash('error','Something went wrong! Please try again!!');

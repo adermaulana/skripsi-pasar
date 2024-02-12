@@ -26,6 +26,10 @@
                             @auth 
                                 @if(Auth::user()->role=='admin')
                                     <li><i class="ti-user"></i> <a href="{{route('admin')}}"  target="_blank">Dashboard</a></li>
+                                @elseif(Auth::user()->role=='pedagang') 
+                                    <li><i class="ti-user"></i> <a href="{{route('admin')}}"  target="_blank">Dashboard</a></li>
+                                @elseif(Auth::user()->role=='nelayan') 
+                                    <li><i class="ti-user"></i> <a href="{{route('admin')}}"  target="_blank">Dashboard</a></li>
                                 @else 
                                     <li><i class="ti-user"></i> <a href="{{route('user')}}"  target="_blank">Dashboard</a></li>
                                 @endif
@@ -51,7 +55,7 @@
                         @php
                             $settings=DB::table('settings')->get();
                         @endphp                    
-                        <a href="{{route('home')}}"><img src="@foreach($settings as $data) {{$data->logo}} @endforeach" alt="logo"></a>
+                        <a href="{{route('home')}}"><img class="img-fluid" style="margin-top:-15px;" src="@foreach($settings as $data) {{$data->logo}} @endforeach" alt="logo"></a>
                     </div>
                     <!--/ End Logo -->
                     <!-- Search Form -->
@@ -73,14 +77,14 @@
                     <div class="search-bar-top">
                         <div class="search-bar">
                             <select>
-                                <option >All Category</option>
+                                <option >Semua Kategori</option>
                                 @foreach(Helper::getAllCategory() as $cat)
                                     <option>{{$cat->title}}</option>
                                 @endforeach
                             </select>
                             <form method="POST" action="{{route('product.search')}}">
                                 @csrf
-                                <input name="search" placeholder="Search Products Here....." type="search">
+                                <input name="search" placeholder="Cari Produk Disini....." type="search">
                                 <button class="btnn" type="submit"><i class="ti-search"></i></button>
                             </form>
                         </div>
@@ -107,8 +111,8 @@
                             @auth
                                 <div class="shopping-item">
                                     <div class="dropdown-cart-header">
-                                        <span>{{count(Helper::getAllProductFromWishlist())}} Items</span>
-                                        <a href="{{route('wishlist')}}">View Wishlist</a>
+                                        <span>{{count(Helper::getAllProductFromWishlist())}} Produk</span>
+                                        <a href="{{route('wishlist')}}">Lihat Wishlist</a>
                                     </div>
                                     <ul class="shopping-list">
                                         {{-- {{Helper::getAllProductFromCart()}} --}}
@@ -144,8 +148,8 @@
                             @auth
                                 <div class="shopping-item">
                                     <div class="dropdown-cart-header">
-                                        <span>{{count(Helper::getAllProductFromCart())}} Items</span>
-                                        <a href="{{route('cart')}}">View Cart</a>
+                                        <span>{{count(Helper::getAllProductFromCart())}} Produk</span>
+                                        <a href="{{route('cart')}}">Lihat Cart</a>
                                     </div>
                                     <ul class="shopping-list">
                                         {{-- {{Helper::getAllProductFromCart()}} --}}
@@ -190,10 +194,10 @@
                                     <div class="nav-inner">	
                                         <ul class="nav main-menu menu navbar-nav">
                                             <li class="{{Request::path()=='home' ? 'active' : ''}}"><a href="{{route('home')}}">Home</a></li>
-                                            <li class="{{Request::path()=='about-us' ? 'active' : ''}}"><a href="{{route('about-us')}}">About Us</a></li>
-                                            <li class="@if(Request::path()=='product-grids'||Request::path()=='product-lists')  active  @endif"><a href="{{route('product-grids')}}">Products</a><span class="new">New</span></li>												
+                                            <li class="{{Request::path()=='about-us' ? 'active' : ''}}"><a href="{{route('about-us')}}">Tentang Kami</a></li>
+                                            <li class="@if(Request::path()=='product-grids'||Request::path()=='product-lists')  active  @endif"><a href="{{route('product-grids')}}">Produk</a></li>												
                                                 {{Helper::getHeaderCategory()}}
-                                            <li class="{{Request::path()=='contact' ? 'active' : ''}}"><a href="{{route('contact')}}">Contact Us</a></li>
+                                            <li class="{{Request::path()=='contact' ? 'active' : ''}}"><a href="{{route('contact')}}">Hubungi Kami</a></li>
                                         </ul>
                                     </div>
                                 </div>

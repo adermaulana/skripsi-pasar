@@ -46,17 +46,17 @@
                 <tr>
                     <td>{{$order->id}}</td>
                     <td>{{$order->order_number}}</td>
-                    <td>{{$order->first_name}} {{$order->last_name}}</td>
+                    <td>{{$order->first_name}}</td>
                     <td>{{$order->email}}</td>
                     <td>{{$order->quantity}}</td>
                     <td>${{$order->shipping->price}}</td>
                     <td>${{number_format($order->total_amount,2)}}</td>
                     <td>
-                        @if($order->status=='new')
+                    @if($order->status=='Dikirim' || $order->status=='Menunggu' ||  $order->status=='Dalam Pengemasan')
                           <span class="badge badge-primary">{{$order->status}}</span>
-                        @elseif($order->status=='process')
+                        @elseif($order->status=='Menunggu')
                           <span class="badge badge-warning">{{$order->status}}</span>
-                        @elseif($order->status=='delivered')
+                        @elseif($order->status=='Selesai')
                           <span class="badge badge-success">{{$order->status}}</span>
                         @else
                           <span class="badge badge-danger">{{$order->status}}</span>
@@ -64,6 +64,7 @@
                     </td>
                     <td>
                         <a href="{{route('user.order.show',$order->id)}}" class="btn btn-warning btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="view" data-placement="bottom"><i class="fas fa-eye"></i></a>
+                        <a href="{{route('user.order.edit',$order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
                         <form method="POST" action="{{route('user.order.delete',[$order->id])}}">
                           @csrf
                           @method('delete')
