@@ -3,12 +3,12 @@
 @section('main-content')
 
 <div class="card">
-    <h5 class="card-header">Add Category</h5>
+    <h5 class="card-header">Tambah Kategori</h5>
     <div class="card-body">
       <form method="post" action="{{route('category.store')}}">
         {{csrf_field()}}
         <div class="form-group">
-          <label for="inputTitle" class="col-form-label">Title <span class="text-danger">*</span></label>
+          <label for="inputTitle" class="col-form-label">Nama Kategori<span class="text-danger">*</span></label>
           <input id="inputTitle" type="text" name="title" placeholder="Enter title"  value="{{old('title')}}" class="form-control">
           @error('title')
           <span class="text-danger">{{$message}}</span>
@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-group">
-          <label for="summary" class="col-form-label">Summary</label>
+          <label for="summary" class="col-form-label">Deskripsi</label>
           <textarea class="form-control" id="summary" name="summary">{{old('summary')}}</textarea>
           @error('summary')
           <span class="text-danger">{{$message}}</span>

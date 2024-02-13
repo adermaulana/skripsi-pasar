@@ -105,7 +105,7 @@
                                             <li class="shipping">
                                                 Shipping Cost
                                                 @if(count(Helper::shipping())>0 && Helper::cartCount()>0)
-                                                    <select name="shipping" class="nice-select">
+                                                    <select name="shipping" id="shipping" class="nice-select" required>
                                                         <option value="">Select your address</option>
                                                         @foreach(Helper::shipping() as $shipping)
                                                         <option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: Rp.{{$shipping->price}}</option>
@@ -142,7 +142,7 @@
                                             {{-- <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox"> Check Payments</label> --}}
                                             <form-group>
                                                 <input name="payment_method"  type="radio" value="cod"> <label> Cash On Delivery</label><br>
-                                                <input name="payment_method"  type="radio" value="paypal"> <label> PayPal</label> 
+                                                <input name="payment_method"  type="radio" value="transfer"> <label> Transfer</label> 
                                             </form-group>
                                             
                                         </div>
@@ -152,7 +152,7 @@
                                 <!-- Payment Method Widget -->
                                 <div class="single-widget payement">
                                     <div class="content">
-                                        <img src="{{('backend/img/payment-method.png')}}" alt="#">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" alt="#">
                                     </div>
                                 </div>
                                 <!--/ End Payment Method Widget -->

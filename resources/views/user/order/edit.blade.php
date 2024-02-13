@@ -24,7 +24,19 @@
       @if($order->status == 'Dibatalkan')
       <!-- Hilang -->
       @else
-      <a id="pay-button" class="btn btn-success text-white">Bayar</a>
+            @if($order->payment_method == 'cod')
+                  @if($order->payment_status == 'paid')
+                  <span class="btn btn-success disabled text-white">Lunas</span>
+                  @else
+                  <span class="btn btn-success disabled text-white">Bayar Ditempat</span>
+                  @endif
+            @elseif($order->payment_method == 'transfer')
+                @if($order->payment_status == 'paid')
+                <a id="pay-button" class="btn btn-success text-white">Lunas</a>
+                @else
+                <a id="pay-button" class="btn btn-success text-white">Bayar</a>
+                @endif
+            @endif
       @endif
     </form>
   </div>

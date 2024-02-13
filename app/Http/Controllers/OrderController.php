@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Shipping;
@@ -24,7 +25,7 @@ class OrderController extends Controller
     public function index()
     {
         
-        $orders=Order::orderBy('id','DESC')->paginate(10);
+        $orders=Order::orderBy('id','desc')->paginate(10);
         return view('backend.order.index')->with('orders',$orders);
     }
 
@@ -119,9 +120,9 @@ class OrderController extends Controller
         }
         // return $order_data['total_amount'];
         $order_data['status']="Menunggu";
-        if(request('payment_method')=='paypal'){
-            $order_data['payment_method']='paypal';
-            $order_data['payment_status']='paid';
+        if(request('payment_method')=='transfer'){
+            $order_data['payment_method']='transfer';
+            $order_data['payment_status']='Unpaid';
         }
         else{
             $order_data['payment_method']='cod';
@@ -162,13 +163,6 @@ class OrderController extends Controller
             'fas'=>'fa-file-alt'
         ];
         Notification::send($users, new StatusNotification($details));
-        if(request('payment_method')=='paypal'){
-            return redirect()->route('payment')->with(['id'=>$order->id]);
-        }
-        else{
-            session()->forget('cart');
-            session()->forget('coupon');
-        }
         Cart::where('user_id', auth()->user()->id)->where('order_id', null)->update(['order_id' => $order->id]);
 
 
@@ -199,7 +193,18 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order=Order::find($id);
-        return view('backend.order.edit')->with('order',$order);
+
+        $webhook = base64_encode(config('midtrans.serverKey'));
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => "Basic $webhook",
+        ])->get("https://api.sandbox.midtrans.com/v2/$order->order_number/status");
+
+        $response = json_decode($response->body());
+
+        return view('backend.order.edit')->with('order',$order)
+                                         ->with('response',$response);
     }
 
     /**
@@ -240,6 +245,20 @@ class OrderController extends Controller
                         }
             }
         }
+
+        $webhook = base64_encode(config('midtrans.serverKey'));
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => "Basic $webhook",
+        ])->get("https://api.sandbox.midtrans.com/v2/$order->order_number/status");
+
+        $response = json_decode($response->body());
+
+        if($response->transaction_status == "settlement"){
+            $order->payment_status = 'paid';
+        }
+
         $status=$order->fill($data)->save();
         if($status){
             request()->session()->flash('success','Successfully updated order');

@@ -3,13 +3,13 @@
 @section('main-content')
 
 <div class="card">
-    <h5 class="card-header">Add Product</h5>
+    <h5 class="card-header">Tambah Produk</h5>
     <div class="card-body">
       <form method="post" action="{{route('product.store')}}">
         {{csrf_field()}}
         <input type="hidden" name="user_id">
         <div class="form-group">
-          <label for="inputTitle" class="col-form-label">Title <span class="text-danger">*</span></label>
+          <label for="inputTitle" class="col-form-label">Nama Produk <span class="text-danger">*</span></label>
           <input id="inputTitle" type="text" name="title" placeholder="Enter title"  value="{{old('title')}}" class="form-control">
           @error('title')
           <span class="text-danger">{{$message}}</span>
@@ -17,7 +17,7 @@
         </div>
 
         <div class="form-group">
-          <label for="summary" class="col-form-label">Summary <span class="text-danger">*</span></label>
+          <label for="summary" class="col-form-label">Deskripsi Singkat<span class="text-danger">*</span></label>
           <textarea class="form-control" id="summary" name="summary">{{old('summary')}}</textarea>
           @error('summary')
           <span class="text-danger">{{$message}}</span>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-group">
-          <label for="description" class="col-form-label">Description</label>
+          <label for="description" class="col-form-label">Deskripsi</label>
           <textarea class="form-control" id="description" name="description">{{old('description')}}</textarea>
           @error('description')
           <span class="text-danger">{{$message}}</span>
@@ -41,9 +41,9 @@
 
         @can('pedagang')
         <div class="form-group">
-          <label for="cat_id">Category <span class="text-danger">*</span></label>
+          <label for="cat_id">Kategori <span class="text-danger">*</span></label>
           <select name="cat_id" id="cat_id" class="form-control">
-            <option value="">--Select any category--</option>
+            <option value="">--Pilih Kategori--</option>
               @foreach($categories as $key=>$cat_data)
                   <option value='{{$cat_data->id}}'>{{$cat_data->title}}</option>
               @endforeach
@@ -52,10 +52,10 @@
         @endcan
         @can('nelayan')
         <div class="form-group">
-          <label for="cat_id">Category <span class="text-danger">*</span></label>
+          <label for="cat_id">Kategori<span class="text-danger">*</span></label>
           <select name="cat_id" id="cat_id" class="form-control">
-            <option value="">--Select any category--</option>
-                  <option value='18'>Ikan</option>
+            <option value="">--Pilih Kategori--</option>
+                  <option value='8'>Ikan</option>
             </select>
           </div>
         @endcan
@@ -79,14 +79,14 @@
         </div>
 
         <div class="form-group">
-          <label for="discount" class="col-form-label">Discount(%)</label>
-          <input id="discount" type="number" name="discount" min="0" max="100" placeholder="Enter discount"  value="{{old('discount')}}" class="form-control">
+          <label for="discount" class="col-form-label">Diskon(%)</label>
+          <input id="discount" type="number" name="discount" min="0" max="100" placeholder="Enter discount"  value="{{old('discount', 0)}}" class="form-control">
           @error('discount')
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
         <div class="form-group">
-          <label for="size">Size</label>
+          <label for="size">Ukuran</label>
           <select name="size[]" class="form-control selectpicker"  multiple data-live-search="true">
               <option value="">--Select any size--</option>
               <option value="S">Small (S)</option>
@@ -109,7 +109,7 @@
         </div>
 
         <div class="form-group">
-          <label for="condition">Condition</label>
+          <label for="condition">Kondisi</label>
           <select name="condition" class="form-control">
               <option value="">--Select Condition--</option>
               <option value="default">Default</option>
@@ -119,7 +119,7 @@
         </div>
 
         <div class="form-group">
-          <label for="stock">Quantity <span class="text-danger">*</span></label>
+          <label for="stock">Stok <span class="text-danger">*</span></label>
           <input id="quantity" type="number" name="stock" min="0" placeholder="Enter quantity"  value="{{old('stock')}}" class="form-control">
           @error('stock')
           <span class="text-danger">{{$message}}</span>

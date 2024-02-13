@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Change Password</div>
+                <div class="card-header">Ubah Password</div>
    
                 <div class="card-body">
                     <form method="POST" action="{{ route('change.password') }}">

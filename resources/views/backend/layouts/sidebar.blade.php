@@ -88,8 +88,8 @@
         <div id="productCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Product Options:</h6>
-            <a class="collapse-item" href="{{route('product.index')}}">Products</a>
-            <a class="collapse-item" href="{{route('product.create')}}">Add Product</a>
+            <a class="collapse-item" href="{{route('product.index')}}">Produk</a>
+            <a class="collapse-item" href="{{route('product.create')}}">Tambah Produk</a>
           </div>
         </div>
     </li>
@@ -103,8 +103,8 @@
         <div id="productCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Product Options:</h6>
-            <a class="collapse-item" href="{{route('product.index')}}">Products</a>
-            <a class="collapse-item" href="{{route('product.create')}}">Add Product</a>
+            <a class="collapse-item" href="{{route('product.index')}}">Produk</a>
+            <a class="collapse-item" href="{{route('product.create')}}">Tambah Produk</a>
           </div>
         </div>
     </li>
@@ -116,13 +116,13 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#brandCollapse" aria-expanded="true" aria-controls="brandCollapse">
           <i class="fas fa-table"></i>
-          <span>Toko</span>
+          <span>Brands</span>
         </a>
         <div id="brandCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Brand Options:</h6>
-            <a class="collapse-item" href="{{route('brand.index')}}">Toko</a>
-            <a class="collapse-item" href="{{route('brand.create')}}">Tambah Toko</a>
+            <a class="collapse-item" href="{{route('brand.index')}}">Brands</a>
+            <a class="collapse-item" href="{{route('brand.create')}}">Tambah Brand</a>
           </div>
         </div>
     </li>

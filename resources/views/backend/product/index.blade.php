@@ -10,7 +10,7 @@
      </div>
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary float-left">Product Lists</h6>
-      <a href="{{route('product.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Product</a>
+      <a href="{{route('product.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Tambah Produk</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -71,7 +71,11 @@
                     <td>  {{$product->discount}}% OFF</td>
                     <td>{{$product->size}}</td>
                     <td>{{$product->condition}}</td>
+                    @if($product->brand_id == NULL)
+                    <td></td>
+                    @else
                     <td> {{ucfirst($product->brand->title)}}</td>
+                    @endif
                     <td>
                       @if($product->stock>0)
                       <span class="badge badge-primary">{{$product->stock}}</span>
@@ -111,7 +115,7 @@
         </table>
         <span style="float:right">{{$products->links()}}</span>
         @else
-          <h6 class="text-center">No Products found!!! Please create Product</h6>
+          <h6 class="text-center">Tidak ada produk! Tambahkan terlebih dahulu</h6>
         @endif
       </div>
     </div>
