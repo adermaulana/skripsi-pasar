@@ -12,7 +12,7 @@
       <div class="form-group">
         @if(isset($response->transaction_status) && $response->transaction_status == 'settlement')
         <small>
-          Kode, <b class="badge badge-success">{{ $order->order_number }}</b> telah melakukan pembayaran
+          Nomor <b class="badge badge-success">{{ $order->order_number }}</b> telah melakukan pembayaran, silahkan konfirmasi.
         </small><br><hr>
         <label for="status">Status :</label>
         <select name="status" id="" class="form-control">
