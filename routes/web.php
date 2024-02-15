@@ -15,6 +15,8 @@
     use App\Http\Controllers\PayPalController;
     use App\Http\Controllers\NotificationController;
     use App\Http\Controllers\HomeController;
+    use App\Http\Controllers\RumusController;
+    use App\Http\Controllers\Rumus2Controller;
     use \UniSharp\LaravelFilemanager\Lfm;
 
     /*
@@ -203,3 +205,11 @@
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         Lfm::routes();
     });
+
+
+    //Rumus
+
+    Route::get('/rumus',[RumusController::class,'index']);
+
+
+    Route::get('/rumus2',[Rumus2Controller::class,'index']);

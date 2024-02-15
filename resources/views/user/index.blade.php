@@ -127,7 +127,7 @@
                     <td>{{$order->first_name}}</td>
                     <td>{{$order->email}}</td>
                     <td>{{$order->quantity}}</td>
-                    <td>${{number_format($order->total_amount,2)}}</td>
+                    <td>Rp.{{number_format($order->total_amount,2)}}</td>
                     <td>
                     @if($order->status=='Dikirim' || $order->status=='Menunggu' ||  $order->status=='Dalam Pengemasan')
                           <span class="badge badge-primary">{{$order->status}}</span>

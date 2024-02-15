@@ -22,7 +22,7 @@
               <th>Name</th>
               <th>Email</th>
               <th>Quantity</th>
-              <th>Charge</th>
+              <th>Ongkir</th>
               <th>Total Amount</th>
               <th>Status</th>
               <th>Action</th>
@@ -35,7 +35,7 @@
               <th>Name</th>
               <th>Email</th>
               <th>Quantity</th>
-              <th>Charge</th>
+              <th>Ongkir</th>
               <th>Total Amount</th>
               <th>Status</th>
               <th>Action</th>
@@ -49,8 +49,8 @@
                     <td>{{$order->first_name}}</td>
                     <td>{{$order->email}}</td>
                     <td>{{$order->quantity}}</td>
-                    <td>${{$order->shipping->price}}</td>
-                    <td>${{number_format($order->total_amount,2)}}</td>
+                    <td>Rp.{{$order->shipping->price}}</td>
+                    <td>Rp.{{number_format($order->total_amount,2)}}</td>
                     <td>
                     @if($order->status=='Dikirim' || $order->status=='Menunggu' ||  $order->status=='Dalam Pengemasan')
                           <span class="badge badge-primary">{{$order->status}}</span>

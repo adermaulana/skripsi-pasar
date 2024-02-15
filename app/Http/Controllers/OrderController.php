@@ -255,7 +255,7 @@ class OrderController extends Controller
 
         $response = json_decode($response->body());
 
-        if($response->transaction_status == "settlement"){
+        if(isset($response->transaction_status) && $response->transaction_status == "settlement"){
             $order->payment_status = 'paid';
         }
 
@@ -309,23 +309,26 @@ class OrderController extends Controller
         // return $request->all();
         $order=Order::where('user_id',auth()->user()->id)->where('order_number',$request->order_number)->first();
         if($order){
-            if($order->status=="new"){
-            request()->session()->flash('success','Your order has been placed. please wait.');
+            if($order->status=="Menunggu"){
+            request()->session()->flash('success','Pesanan anda belum dikonfirmasi, silahkan menunggu');
             return redirect()->route('home');
 
             }
-            elseif($order->status=="process"){
-                request()->session()->flash('success','Your order is under processing please wait.');
+            elseif($order->status=="Dalam Pengemasan"){
+                request()->session()->flash('success','Pesanan anda dalam pengemasan.');
                 return redirect()->route('home');
     
             }
-            elseif($order->status=="delivered"){
-                request()->session()->flash('success','Your order is successfully delivered.');
+            elseif($order->status=="Dikirim"){
+                request()->session()->flash('success','Pesanan anda telah dikirim.');
                 return redirect()->route('home');
-    
+            }
+            elseif($order->status=="Selesai"){
+                request()->session()->flash('success','Pesanan anda telah sampai di alamat tujuan.');
+                return redirect()->route('home');
             }
             else{
-                request()->session()->flash('error','Your order canceled. please try again');
+                request()->session()->flash('error','Pesanan anda di batalkan');
                 return redirect()->route('home');
     
             }

@@ -160,7 +160,7 @@
                                 <div class="single-widget get-button">
                                     <div class="content">
                                         <div class="button">
-                                            <button type="submit" class="btn">proceed to checkout</button>
+                                            <button type="submit" class="btn">Order</button>
                                         </div>
                                     </div>
                                 </div>
@@ -314,7 +314,7 @@
 				let subtotal = parseFloat( $('.order_subtotal').data('price') ); 
 				let coupon = parseFloat( $('.coupon_price').data('price') ) || 0; 
 				// alert(coupon);
-				$('#order_total_price span').text('$'+(subtotal + cost-coupon).toFixed(2));
+				$('#order_total_price span').text('Rp.'+(subtotal + cost-coupon).toFixed(2));
 			});
 
 		});

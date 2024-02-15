@@ -32,15 +32,15 @@
             <td>${{$order->shipping->price}}</td>
             <td>${{number_format($order->total_amount,2)}}</td>
             <td>
-                @if($order->status=='new')
-                  <span class="badge badge-primary">{{$order->status}}</span>
-                @elseif($order->status=='process')
-                  <span class="badge badge-warning">{{$order->status}}</span>
-                @elseif($order->status=='delivered')
-                  <span class="badge badge-success">{{$order->status}}</span>
-                @else
-                  <span class="badge badge-danger">{{$order->status}}</span>
-                @endif
+                    @if($order->status=='Dikirim' || $order->status=='Menunggu' ||  $order->status=='Dalam Pengemasan')
+                          <span class="badge badge-primary">{{$order->status}}</span>
+                        @elseif($order->status=='Menunggu')
+                          <span class="badge badge-warning">{{$order->status}}</span>
+                        @elseif($order->status=='Selesai')
+                          <span class="badge badge-success">{{$order->status}}</span>
+                        @else
+                          <span class="badge badge-danger">{{$order->status}}</span>
+                        @endif
             </td>
             <td>
                 <form method="POST" action="{{route('order.destroy',[$order->id])}}">

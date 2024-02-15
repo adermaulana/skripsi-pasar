@@ -59,30 +59,37 @@ class ProductReviewController extends Controller
         ]);
         $product_info=Product::getProductBySlug($request->slug);
         //  return $product_info;
-        // return $request->all();
-        $data=$request->all();
-        $data['product_id']=$product_info->id;
-        $data['user_id']=$request->user()->id;
-        $data['store_id']=$product_info->user_id;
-        $data['status']='active';
+// Merge default values with request data
+$data = array_merge([
+    'rate_jenisproduk' => 0,
+    'rate_ketersediaanproduk' => 0,
+    'rate_pelayanan' => 0,
+    'rate_kebersihantoko' => 0,
+    'rate_kualitasproduk' => 0,
+    'rate_jumlahpenjualan' => 0,
+], $request->all());
 
-        // dd($data);
+// Rata - rata rating tiap user terhadap toko
+$totalRating = $data['rate_jenisproduk'] +
+    $data['rate_ketersediaanproduk'] +
+    $data['rate_pelayanan'] +
+    $data['rate_kebersihantoko'] +
+    $data['rate_kualitasproduk'] +
+    $data['rate_jumlahpenjualan'];
 
-        $defaults = [
-            'rate_jenisproduk' => 0,
-            'rate_ketersediaanproduk' => 0,
-            'rate_pelayanan' => 0,
-            'rate_kebersihantoko' => 0,
-            'rate_kualitasproduk' => 0,
-            'rate_jumlahpenjualan' => 0,
-        ];
+$averageRating = $totalRating / 6;
 
-        $data = array_merge($defaults, $data);
-        
-        $status=ProductReview::updateOrCreate(
-            ['user_id' => $data['user_id'], 'product_id' => $data['product_id']],
-            $data
-        );
+$data['average'] = $averageRating;
+$data['product_id'] = $product_info->id;
+$data['user_id'] = $request->user()->id;
+$data['store_id'] = $product_info->user_id;
+$data['status'] = 'active';
+
+// Update or create the product review
+$status = ProductReview::updateOrCreate(
+    ['user_id' => $data['user_id'], 'product_id' => $data['product_id']],
+    $data
+);
 
         $user=User::where('role','admin')->get();
         $details=[

@@ -20,7 +20,11 @@
       <div class="form-group">
         <input type="hidden" name="status" value="Dibatalkan">
       </div>
+      @if($order->payment_status == 'paid')
+      <a class="btn btn-primary disabled">Batalkan</a>
+      @else
       <button type="submit" class="btn btn-primary">Batalkan</button>
+      @endif
       @if($order->status == 'Dibatalkan')
       <!-- Hilang -->
       @else
@@ -32,7 +36,7 @@
                   @endif
             @elseif($order->payment_method == 'transfer')
                 @if($order->payment_status == 'paid')
-                <a id="pay-button" class="btn btn-success text-white">Lunas</a>
+                <a id="pay-button" class="btn btn-success disabled text-white">Lunas</a>
                 @else
                 <a id="pay-button" class="btn btn-success text-white">Bayar</a>
                 @endif

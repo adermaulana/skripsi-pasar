@@ -16,7 +16,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Quantity</th>
-            <th>Charge</th>
+            <th>Ongkir</th>
             <th>Total Amount</th>
             <th>Status</th>
             <th>Action</th>
@@ -29,19 +29,19 @@
             <td>{{$order->first_name}} {{$order->last_name}}</td>
             <td>{{$order->email}}</td>
             <td>{{$order->quantity}}</td>
-            <td>${{$order->shipping->price}}</td>
-            <td>${{number_format($order->total_amount,2)}}</td>
+            <td>Rp.{{$order->shipping->price}}</td>
+            <td>Rp.{{number_format($order->total_amount,2)}}</td>
             <td>
-                @if($order->status=='new')
-                  <span class="badge badge-primary">{{$order->status}}</span>
-                @elseif($order->status=='process')
-                  <span class="badge badge-warning">{{$order->status}}</span>
-                @elseif($order->status=='delivered')
-                  <span class="badge badge-success">{{$order->status}}</span>
-                @else
-                  <span class="badge badge-danger">{{$order->status}}</span>
-                @endif
-            </td>
+                        @if($order->status=='Dikirim' || $order->status=='Menunggu' ||  $order->status=='Dalam Pengemasan')
+                          <span class="badge badge-primary">{{$order->status}}</span>
+                        @elseif($order->status=='Menunggu')
+                          <span class="badge badge-warning">{{$order->status}}</span>
+                        @elseif($order->status=='Selesai')
+                          <span class="badge badge-success">{{$order->status}}</span>
+                        @else
+                          <span class="badge badge-danger">{{$order->status}}</span>
+                        @endif
+                    </td>
             <td>
                 <a href="{{route('order.edit',$order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
                 <form method="POST" action="{{route('order.destroy',[$order->id])}}">

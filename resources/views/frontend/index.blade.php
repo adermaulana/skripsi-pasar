@@ -2,13 +2,12 @@
 @section('title','E-Panrita Mart')
 @section('main-content')
 <!-- Slider Area -->
-@if(count($brands)>0)
-    <section id="Gslider" class="carousel slide" data-ride="carousel">
+@if($brands->count() > 0 )
+<section id="Gslider" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @foreach($brands as $key=>$brand)
         <li data-target="#Gslider" data-slide-to="{{$key}}" class="{{(($key==0)? 'active' : '')}}"></li>
             @endforeach
-
         </ol>
         <div class="carousel-inner" role="listbox">
                 @foreach($brands as $key=>$brand)
@@ -57,43 +56,45 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
         </a>
-    </section>
+    </section>   
 @endif
 
 <!--/ End Slider Area -->
 
+@if(Auth::check() && Auth::user()->role=='user')
 <!-- Start Small Banner  -->
-<section class="small-banner section">
+<section class="small-banner section mt-5">
     <div class="container-fluid">
         <div class="row">
+        <div class="col-12">
+                    <div class="section-title">
+                        <h2>Toko Yang Direkomendasikan Untuk Kamu</h2>
+                    </div>
+        </div>
+        @php
+        $topThreeStores = collect($recommendedStores)->sortByDesc(function($score) {
+            return $score;
+        })->take(3);
+        @endphp
+        @foreach ($topThreeStores as $storeId => $score)
             @php
-            $category_lists=DB::table('categories')->where('status','active')->limit(3)->get();
+                $store = DB::table('users')->where('id', $storeId)->first();
             @endphp
-            @if($category_lists)
-                @foreach($category_lists as $cat)
-                    @if($cat->is_parent==2)
-                        <!-- Single Banner  -->
                         <div class="col-lg-4 col-md-6 col-12">
                             <div class="single-banner">
-                                @if($cat->photo)
-                                    <img src="{{$cat->photo}}" alt="{{$cat->photo}}">
-                                @else
-                                    <img src="https://via.placeholder.com/600x370" alt="#">
-                                @endif
-                                <div class="content">
-                                    <h3>{{$cat->title}}</h3>
-                                        <a href="{{route('product-cat',$cat->slug)}}">Discover Now</a>
+                                    <img src="{{$store->photo}}" alt="{{$store->photo}}">
+                                <div  class="content">
+                                    <h3 style="color:orange !important" >{{$store->name}}</h3>
+                                        <a style="color:white !important" class="btn btn-lg ws-btn wow fadeInUpBig" href="{{route('product-grids')}}">Belanja Sekarang</a>
                                 </div>
                             </div>
                         </div>
-                    @endif
-                    <!-- /End Single Banner  -->
-                @endforeach
-            @endif
+        @endforeach
         </div>
     </div>
 </section>
 <!-- End Small Banner -->
+@endif
 
 <!-- Start Product Area -->
 <div class="product-area section">
@@ -101,7 +102,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <h2>Produk Yang Direkomendasikan Buat Kamu</h2>
+                        <h2>Produk Yang Dijual</h2>
                     </div>
                 </div>
             </div>
@@ -244,7 +245,7 @@
 
 
 <!-- Start Shop Services Area -->
-<section class="shop-services section home">
+<section class="shop-services section home mb-5">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-12">
@@ -288,7 +289,6 @@
 </section>
 <!-- End Shop Services Area -->
 
-@include('frontend.layouts.newsletter')
 
 <!-- Modal -->
 @if($product_lists)
